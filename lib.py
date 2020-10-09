@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-# task 3, RGB<->HSV
 # OpenCV equivalent: cv2.cvtColor(img, <name>)
 def bgr_to_hsv_color(b:int=0, g:int=0, r:int=0): # b/g/r from 0 to 255
     b /= 255
@@ -88,3 +87,61 @@ def hsv_to_bgr(img):
             img.itemset((x, y, 1), g)
             img.itemset((x, y, 2), r)
     return img
+
+
+def immse(img1, img2):
+    img_width, img_height, img_channel = img1.shape
+    sum = np.int64()
+    for x in range(img_width):
+        for y in range(img_height):
+            avg1 = (np.int64(img1.item(x, y, 0)) +
+                    np.int64(img1.item(x, y, 1)) +
+                    np.int64(img1.item(x, y, 2))) // 3
+
+            avg2 = (np.int64(img2.item(x, y, 0)) +
+                    np.int64(img2.item(x, y, 1)) +
+                    np.int64(img2.item(x, y, 2))) // 3
+            sum += (avg1 - avg2) ** 2
+    return sum / (img_width * img_height)
+
+
+def average_of_rgb(img):
+    (img_width, img_height, img_channel) = img.shape
+    for x in range(img_width):
+        for y in range(img_height):
+            b = int(img.item(x, y, 0))
+            g = int(img.item(x, y, 1))
+            r = int(img.item(x, y, 2))
+            avg = (b + g + r) // 3
+
+            for i in range(3):
+                img.itemset((x, y, i), avg)
+    return img
+
+
+def brightness_inc_bgr(img, delta):
+    if delta <= 0:
+        return img
+    img_width, img_height, img_channel = img.shape
+    for x in range(img_width):
+        for y in range(img_height):
+            b = img.item(x, y, 0)
+            g = img.item(x, y, 1)
+            r = img.item(x, y, 2)
+
+            if b + delta <= 255:
+                img.itemset((x, y, 0), b + delta)
+            else:
+                img.itemset((x, y, 0), 255)
+
+            if g + delta <= 255:
+                img.itemset((x, y, 1), g + delta)
+            else:
+                img.itemset((x, y, 1), 255)
+
+            if r + delta <= 255:
+                img.itemset((x, y, 2), r + delta)
+            else:
+                img.itemset((x, y, 2), 255)
+    return img
+
