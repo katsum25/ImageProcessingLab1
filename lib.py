@@ -39,7 +39,7 @@ def bgr_to_hsv_color(b:int=0, g:int=0, r:int=0): # b/g/r from 0 to 255
 
 
 def bgr_to_hsv(img):
-    img_width, img_height, imt_channel = img.shape
+    img_width, img_height, img_channel = img.shape
     for x in range(img_width):
         for y in range(img_height):
             h, s, v = bgr_to_hsv_color(img.item(x, y, 0),
