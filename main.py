@@ -37,6 +37,16 @@ def task_3_hsv_to_bgr():
     cv2.destroyAllWindows()
     print('[TASK 3] <Successfully has ended>')
 
+def task_3_brightness_hsv():
+    print('[TAKS 3: BRIGHTNESS HSV] <Starting testing>')
+    img = cv2.imread('images/etg.jpg')
+    print('[Opening image...]')
+    img = bgr_to_hsv(img)
+    cv2.imshow('my ', hsv_to_bgr(brightness_inc_hsv(img, 50)))
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    print('[TASK 3] <Successfully has ended>')
+
 
 def task_1_immse():
     print('[TAKS 1: IMMSE] <Starting testing>')

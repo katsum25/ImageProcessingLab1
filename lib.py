@@ -145,3 +145,16 @@ def brightness_inc_bgr(img, delta):
                 img.itemset((x, y, 2), 255)
     return img
 
+
+def brightness_inc_hsv(img, delta:int=0):
+    if delta <= 0:
+        return img
+    w, h, c = img.shape
+    for x in range(w):
+        for y in range(h):
+            v = img.item(x, y, 2) / 255 * 100
+            if v + delta <= 100:
+                img.itemset((x, y, 2), (v + delta) * 255 / 100)
+            else: 
+                img.itemset((x, y, 2), 100 * 255 / 100)
+    return img
