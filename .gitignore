@@ -256,3 +256,5 @@ dmypy.json
 ### video
 *.mp4
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,pycharm,python
+
+.idea
