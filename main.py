@@ -47,7 +47,6 @@ def task_3_brightness_hsv():
     cv2.destroyAllWindows()
     print('[TASK 3] <Successfully has ended>')
 
-
 def task_1_immse():
     print('[TAKS 1: IMMSE] <Starting testing>')
     img1 = cv2.imread('images/etg.jpg')
