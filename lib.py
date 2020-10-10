@@ -159,3 +159,26 @@ def brightness_inc_hsv(img, delta:int=0):
                 img.itemset((x, y, 2), 100 * 255 / 100)
     return img
 
+# comparison in time
+def immse_comp_in_time(img_bgr, delta_bgr, img_hsv, delta_hsv):
+    img_bgr1 = img_bgr
+    e1 = cv2.getTickCount()
+    img_bg1 = brightness_inc_bgr(img_bgr1, delta_bgr)
+    e2 = cv2.getTickCount()
+    time1 = (e2 - e1) / cv2.getTickFrequency()
+
+    mse = immse(img_bgr, img_bg1)
+    print('mse BGR filtering = ', mse)
+    print(f'coincidence = {(255 ** 2 - mse) / (255 ** 2) * 100}%')
+
+    img_hsv1 = img_hsv
+    e1 = cv2.getTickCount()
+    img_hsv1 = brightness_inc_hsv(img_hsv1, delta_hsv)
+    e2 = cv2.getTickCount()
+    time2 = (e2 - e1)/ cv2.getTickFrequency()
+
+    mse = immse(img_hsv, img_hsv1)
+    print('mse HSV filtering= ' + str(mse))
+    print(f'coincidence = {str((255 ** 2 - mse) / (255 ** 2) * 100)}%')
+
+    return time1, time2, img_bg1, img_hsv1

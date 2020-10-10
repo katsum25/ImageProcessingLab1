@@ -11,10 +11,14 @@ def task_3_bgr_to_hsv():
     print('[Opening images...]')
     start_time = time.time()
     cv2.imshow('my ', bgr_to_hsv(img1))
-    print(f'my time = {(time.time() - start_time)} seconds')
+    print(f'\tmy time = {(time.time() - start_time)} seconds')
     start_time = time.time()
     cv2.imshow('openCV ', cv2.cvtColor(img2, cv2.COLOR_BGR2HSV))
-    print(f'opencv time = {(time.time() - start_time)} seconds')
+    print(f'\topencv time = {(time.time() - start_time)} seconds')
+    mse = immse(img1, img2)
+    coincidence = (255 ** 2 - mse) / (255 ** 2) * 100
+    print(f'\tmse = {mse}')
+    print(f'\tcoincidence = {int(coincidence)} %')
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     print('[TASK 3] <Successfully has ended>')
@@ -29,10 +33,14 @@ def task_3_hsv_to_bgr():
     img2_hsv = cv2.cvtColor(img2, cv2.COLOR_BGR2HSV)
     start_time = time.time()
     cv2.imshow('my ', hsv_to_bgr(img1_hsv))
-    print(f'my time = {(time.time() - start_time)} seconds')
+    print(f'\tmy time = {(time.time() - start_time)} seconds')
     start_time = time.time()
     cv2.imshow('openCV ', cv2.cvtColor(img2_hsv, cv2.COLOR_HSV2BGR))
-    print(f'opencv time = {(time.time() - start_time)} seconds')
+    print(f'\topencv time = {(time.time() - start_time)} seconds')
+    mse = immse(img1_hsv, img2_hsv)
+    coincidence = (255 ** 2 - mse) / (255 ** 2) * 100
+    print(f'\tmse = {mse}')
+    print(f'\tcoincidence = {int(coincidence)} %')
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     print('[TASK 3] <Successfully has ended>')
@@ -42,7 +50,10 @@ def task_3_brightness_hsv():
     img = cv2.imread('images/etg.jpg')
     print('[Opening image...]')
     img = bgr_to_hsv(img)
-    cv2.imshow('my ', hsv_to_bgr(brightness_inc_hsv(img, 50)))
+    start_time = time.time()
+    br_img = brightness_inc_hsv(img, 50)
+    print(f'\tmy time = {(time.time() - start_time)} seconds')
+    cv2.imshow('my ', hsv_to_bgr(br_img))
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     print('[TASK 3] <Successfully has ended>')
@@ -65,7 +76,9 @@ def task_3_brightness_bgr():
     print('[TAKS 3: BRIGHTNESS BGR] <Starting testing>')
     img = cv2.imread('images/etg.jpg')
     print('[Opening image...]')
+    start_time = time.time()
     cv2.imshow('my ', brightness_inc_bgr(img, 150))
+    print(f'\tmy time = {(time.time() - start_time)} seconds')
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     print('[TASK 3] <Successfully has ended>')
@@ -76,11 +89,31 @@ def task_2_average_of_rgb():
     img1 = cv2.imread('images/etg.jpg')
     img2 = cv2.imread('images/etg.jpg')
     print('[Opening images...]')
+    start_time = time.time()
     cv2.imshow('my ', average_of_rgb(img1))
+    print(f'\tmy time = {(time.time() - start_time)} seconds')
+    start_time = time.time()
     cv2.imshow('opencv ', cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY))
+    print(f'\topencv time = {(time.time() - start_time)} seconds')
+    mse = immse(img1, img2)
+    coincidence = (255 ** 2 - mse) / (255 ** 2) * 100
+    print(f'\tmse = {mse}')
+    print(f'\tcoincidence = {int(coincidence)} %')
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     print('[TASK 2] <Successfully has ended>')
+def task_3_immse_comp_in_time():
+    print('[TASK 3: IMMSE COMP IN TIME] <Starting testing>')
+    img = cv2.imread('images/etg.jpg')
+    img_bgr = img
+    img = cv2.imread('images/etg.jpg')
+    img_hsv = img
+    time1, time2, img_bgr, img_hsv = immse_comp_in_time(img_bgr, 100, img_hsv, 100)
+   # cv2.imshow('', imgBGR)
+   # cv2.imshow('', imgHSV)
+    print('time BGR img filtering = ' + str(time1))
+    print('time HSV img filtering = ' + str(time2))
+    print('[TASK 3] <Successfully has ended>')
 
 
 def main():
@@ -97,7 +130,7 @@ def menu():
         4. Task 3. HSV to BGR
         5. Task 3. Brightness increment BGR
         6. Task 3. Brightness increment HSV
-        7. Task 3. IMMSE comp in time
+        7. Task 3. HSV&BGR comparison in time + IMMSE
         """
     )
 
@@ -116,9 +149,9 @@ def menu():
         elif input_symbol == 5:
             task_3_brightness_bgr()
         elif input_symbol == 6:
-            pass
+            task_3_brightness_hsv()
         elif input_symbol == 7:
-            pass
+            task_3_immse_comp_in_time()
 
 
 if __name__ == '__main__':
