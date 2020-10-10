@@ -130,7 +130,7 @@ def menu():
         4. Task 3. HSV to BGR
         5. Task 3. Brightness increment BGR
         6. Task 3. Brightness increment HSV
-        7. Task 3. HSV&BGR comparison in time + IMMSE
+        7. Task 3. HSV&BGR brightness comparison in time + IMMSE
         """
     )
 
